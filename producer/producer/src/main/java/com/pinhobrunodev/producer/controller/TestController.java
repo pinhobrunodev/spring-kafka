@@ -24,11 +24,16 @@ public class TestController {
         jsonKafkaTemplate.send("person-topic", new Person("Bruno", new Random().nextInt(50)));
     }
 
+
     @GetMapping("send")
     public void send() {
         IntStream.range(0, 51).boxed().forEach(n -> kafkaTemplate.send("topic-1", "Número: " + n));
 
     }
+    @GetMapping("send-2")
+    public void send2() {
+        kafkaTemplate.send("my-topic", "Teste");
 
+    }
 
 }
