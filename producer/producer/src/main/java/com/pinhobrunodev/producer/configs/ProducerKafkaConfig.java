@@ -51,7 +51,7 @@ public class ProducerKafkaConfig {
     @Bean
     public NewTopic topic1() { // Qnd mais de 1 consumer se conecta  a mais de 1 topico no msm grupo, as partições são divididas
                                // Se tiver 11 consumidores não vai ter topico suficiente
-        return new NewTopic("topic-1", 10, Short.valueOf("1"));
+        return new NewTopic("topic-1", 2, Short.valueOf("1"));
         // 2.6
 //        return TopicBuilder.name("topic-1").build();
     }
