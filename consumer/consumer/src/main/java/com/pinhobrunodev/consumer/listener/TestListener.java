@@ -51,24 +51,3 @@ public class TestListener {
     }
 }
 
-        022-01-19 18:30:39.479  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 8 Message: Teste
-        2022-01-19 18:30:44.122  INFO 6524 --- [ntainer#3-0-C-1] c.p.consumer.listener.TestListener       : Partition 0: 0 Message: Teste
-        2022-01-19 18:30:44.922  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 3 Message: Teste
-        2022-01-19 18:30:45.918  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 4 Message: Teste
-        2022-01-19 18:30:46.054  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 9 Message: Teste
-        2022-01-19 18:30:46.174  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 3 Message: Teste
-        2022-01-19 18:30:46.286  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 7 Message: Teste
-        2022-01-19 18:30:46.482  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 8 Message: Teste
-        2022-01-19 18:30:46.593  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 4 Message: Teste
-        2022-01-19 18:30:46.702  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 2 Message: Teste
-        2022-01-19 18:32:03.250  INFO 6524 --- [ntainer#3-0-C-1] c.p.consumer.listener.TestListener       : Partition 0: 0 Message: Teste
-        2022-01-19 18:32:03.403  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 5 Message: Teste
-        2022-01-19 18:32:03.523  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 9 Message: Teste
-        2022-01-19 18:32:03.626  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 6 Message: Teste
-        2022-01-19 18:32:03.841  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 4 Message: Teste
-        2022-01-19 18:32:03.963  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 3 Message: Teste
-        2022-01-19 18:32:04.042  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 9 Message: Teste
-        2022-01-19 18:32:04.142  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 3 Message: Teste
-        2022-01-19 18:32:04.251  INFO 6524 --- [ntainer#3-0-C-1] c.p.consumer.listener.TestListener       : Partition 0: 0 Message: Teste
-        2022-01-19 18:32:04.347  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 7 Message: Teste
-        2022-01-19 18:32:04.444  INFO 6524 --- [ntainer#2-0-C-1] c.p.consumer.listener.TestListener       : Partition 1-9: 6 Message: Teste
