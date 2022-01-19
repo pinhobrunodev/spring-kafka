@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 @RestController
 public class TestController {
@@ -17,13 +18,16 @@ public class TestController {
     private KafkaTemplate<String, String> kafkaTemplate;
     @Autowired
     private KafkaTemplate<String, Serializable> jsonKafkaTemplate;
+
     @GetMapping("send-person")
     public void sendPerson() {
         jsonKafkaTemplate.send("person-topic", new Person("Bruno", new Random().nextInt(50)));
     }
+
     @GetMapping("send")
     public void send() {
-        kafkaTemplate.send("topic-1", "Olá Mundo!");
+        IntStream.range(0, 51).boxed().forEach(n -> kafkaTemplate.send("topic-1", "Número: " + n));
+
     }
 
 

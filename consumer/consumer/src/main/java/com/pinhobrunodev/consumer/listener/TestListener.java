@@ -10,9 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestListener {
 
-    @KafkaListener(topics = "topic-1", groupId = "group-1")
+    //concurrency = "2" -> Quantidade de Threads que quero q abra -> DEPENDE MUITO DA QUANTIDADE DE PARTIÇÕES
+    // se concurrency > partitions = BAD
+    // Muito usado para escalonar o Listening
+    @KafkaListener(topics = "topic-1", groupId = "group-1",concurrency = "2")
     public void listen(String message) {
-        log.info(message);
+        log.info("Thread: {} Message: {} ", Thread.currentThread().getId(),message); // Cada listener abre uma Thread
     }
 
 
@@ -33,3 +36,4 @@ public class TestListener {
         log.info("Histórico: {} ", person);
     }
 }
+
