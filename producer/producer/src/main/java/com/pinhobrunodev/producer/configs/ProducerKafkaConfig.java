@@ -1,7 +1,6 @@
 package com.pinhobrunodev.producer.configs;
 
 import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +12,46 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 @Configuration
 public class ProducerKafkaConfig {
 
     @Autowired
-    private KafkaProperties kafkaProperties; // Usado para pegar as configs do Kafka ( Exemplo : endereço )
+    private KafkaProperties kafkaProperties;
 
-    // Factory => Serialização das Mensagens e Endereço do Broker
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         var configs = new HashMap<String, Object>();
-        configs.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers()); // Setando o valor do endereço do meu broker.
-        configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class); // Setando como vai ser feito a serialização da Chave
-        configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);// Setando como vai ser feito a serialização dos Valores do payload
+        configs.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+        configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(configs);
     }
 
-    // Template => Usado para envio das mensagens
-    // <K,V> -> Chave String e valor String
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
+
+    // Trafegar objetos
+    @Bean
+    public ProducerFactory<String, Object> jsonProducerFactory() {
+        var configs = new HashMap<String, Object>();
+        configs.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
+        configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configs, new StringSerializer(), new JsonSerializer<>());
+    }
+    // Trafegar objetos
+    @Bean
+    public KafkaTemplate<String, Serializable> jsonKafkaTemplate() {
+        return new KafkaTemplate(jsonProducerFactory());
+    }
+
 
     // Permitindo criar topicos a partir da aplicação produtora
     @Bean
@@ -47,23 +61,14 @@ public class ProducerKafkaConfig {
         return new KafkaAdmin(configs);
     }
 
-    // Tópico1 Criado.
-    @Bean
-    public NewTopic topic1() { // Qnd mais de 1 consumer se conecta  a mais de 1 topico no msm grupo, as partições são divididas
-                               // Se tiver 11 consumidores não vai ter topico suficiente
-        return new NewTopic("topic-1", 2, Short.valueOf("1"));
-        // 2.6
-//        return TopicBuilder.name("topic-1").build();
-    }
 
     //2.7 -> Criar varios topicos
-/*    public KafkaAdmin.NewTopics topics() {
+    @Bean
+    public KafkaAdmin.NewTopics topics() {
         return new KafkaAdmin.NewTopics(
-                TopicBuilder.name("topic-1").build(),
-                TopicBuilder.name("topic-1").build(),
-                TopicBuilder.name("topic-1").build(),
-                TopicBuilder.name("topic-1").build()
+                TopicBuilder.name("topic-1").partitions(2).replicas(1).build(),
+                TopicBuilder.name("person-topic").partitions(2).build()
         );
     }
-*/
+
 }
