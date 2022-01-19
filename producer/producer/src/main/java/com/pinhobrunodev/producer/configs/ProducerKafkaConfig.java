@@ -57,8 +57,7 @@ public class ProducerKafkaConfig {
     }
 
     //2.7 -> Criar varios topicos
-    @Bean
-    public KafkaAdmin.NewTopics topics() {
+/*    public KafkaAdmin.NewTopics topics() {
         return new KafkaAdmin.NewTopics(
                 TopicBuilder.name("topic-1").build(),
                 TopicBuilder.name("topic-1").build(),
@@ -66,5 +65,5 @@ public class ProducerKafkaConfig {
                 TopicBuilder.name("topic-1").build()
         );
     }
-
+*/
 }

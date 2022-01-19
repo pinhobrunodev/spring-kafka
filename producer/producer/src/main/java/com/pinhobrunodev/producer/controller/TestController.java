@@ -7,17 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.stream.IntStream;
 
 @RestController
 public class TestController {
 
 
     @Autowired
-    private KafkaTemplate<String ,String> kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @GetMapping("send")
-    public ResponseEntity<?> send(){
-        kafkaTemplate.send("topic-1","Envio de :"+ LocalDateTime.now());
+    public ResponseEntity<?> send() {
+        IntStream.range(1, 50)
+                .boxed()
+                .forEach(n -> kafkaTemplate.send("topic-1", "Número: " + n));
         return ResponseEntity.ok().build();
     }
 

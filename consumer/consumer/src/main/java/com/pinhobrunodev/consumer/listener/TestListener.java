@@ -11,7 +11,7 @@ public class TestListener {
 
     @KafkaListener(topics = "topic-1",groupId = "group-1")
     public void listen(String message){
-        log.info("Thread: {}",Thread.currentThread().getId());
-        log.info("Received: {}",message);
+       // log.info("Thread: {}",Thread.currentThread().getId());
+        log.info(message);
     }
 }
