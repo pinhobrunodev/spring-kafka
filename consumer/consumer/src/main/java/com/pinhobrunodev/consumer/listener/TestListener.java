@@ -19,12 +19,12 @@ public class TestListener {
         log.info("Thread: {} Message: {} ", Thread.currentThread().getId(), message); // Cada listener abre uma Thread
     }
 
-    @KafkaListener(topics = "my-topic", groupId = "my-group", containerFactory = "concurrentKafkaListenerContainerFactory")
+    /*@KafkaListener(topics = "my-topic", groupId = "my-group", containerFactory = "concurrentKafkaListenerContainerFactory")
     public void listen2(String message) {
         log.info("Thread: {} Message: {} ", Thread.currentThread().getId(), message); // Cada listener abre uma Thread
     }
-
-    @KafkaListener(topicPartitions = {@TopicPartition(topic = "my-topic", partitions = "0")}, groupId = "my-group")
+*/
+  /*  @KafkaListener(topicPartitions = {@TopicPartition(topic = "my-topic", partitions = "0")}, groupId = "my-group")
     public void listen2(String message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
         log.info("Partition 0: {} Message: {} ", partition, message);
     }
@@ -33,7 +33,7 @@ public class TestListener {
     public void listen3(String message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
         log.info("Partition 1-9: {} Message: {} ", partition, message);
     }
-
+*/
 
     @PersonCustomListener(groupId = "group-1")
     public void createPerson(Person person) {
