@@ -14,25 +14,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestListener {
 
-    @KafkaListener(topics = "topic-1", groupId = "group-1",containerFactory = "concurrentKafkaListenerContainerFactory")
+    @KafkaListener(topics = "topic-1", groupId = "group-1", containerFactory = "concurrentKafkaListenerContainerFactory")
     public void listen(String message) {
-        log.info("Thread: {} Message: {} ", Thread.currentThread().getId(),message); // Cada listener abre uma Thread
+        log.info("Thread: {} Message: {} ", Thread.currentThread().getId(), message); // Cada listener abre uma Thread
     }
 
-    @KafkaListener(topics = "my-topic", groupId = "my-group",containerFactory = "concurrentKafkaListenerContainerFactory")
+    @KafkaListener(topics = "my-topic", groupId = "my-group", containerFactory = "concurrentKafkaListenerContainerFactory")
     public void listen2(String message) {
-        log.info("Thread: {} Message: {} ", Thread.currentThread().getId(),message); // Cada listener abre uma Thread
+        log.info("Thread: {} Message: {} ", Thread.currentThread().getId(), message); // Cada listener abre uma Thread
     }
 
-   /* @KafkaListener(topicPartitions = {@TopicPartition(topic = "my-topic",partitions = "0")},groupId = "my-group")
+    @KafkaListener(topicPartitions = {@TopicPartition(topic = "my-topic", partitions = "0")}, groupId = "my-group")
     public void listen2(String message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
-        log.info("Partition 0: {} Message: {} ", partition,message);
+        log.info("Partition 0: {} Message: {} ", partition, message);
     }
-    @KafkaListener(topicPartitions = {@TopicPartition(topic = "my-topic",partitions = "1-9")},groupId = "my-group")
+
+    @KafkaListener(topicPartitions = {@TopicPartition(topic = "my-topic", partitions = "1-9")}, groupId = "my-group")
     public void listen3(String message, @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition) {
-        log.info("Partition 1-9: {} Message: {} ", partition,message);
+        log.info("Partition 1-9: {} Message: {} ", partition, message);
     }
-*/
 
 
     @PersonCustomListener(groupId = "group-1")
@@ -40,7 +40,7 @@ public class TestListener {
         log.info("Criar Pessoa: {}", person);
     }
 
-    @KafkaListener(topics = "city-topic",groupId = "group-2",containerFactory = "jsonKafkaListenerContainerFactory")
+    @KafkaListener(topics = "city-topic", groupId = "group-2", containerFactory = "jsonKafkaListenerContainerFactory")
     public void createCity(City city) {
         log.info("Criar cidade: {}", city);
     }

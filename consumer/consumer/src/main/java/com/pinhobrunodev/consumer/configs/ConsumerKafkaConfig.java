@@ -1,6 +1,7 @@
 package com.pinhobrunodev.consumer.configs;
 
 import com.pinhobrunodev.consumer.model.Person;
+import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,13 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.RecordInterceptor;
 import org.springframework.kafka.support.converter.JsonMessageConverter;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 
+@Log4j2
 @EnableKafka // So fica na consumidora
 @Configuration
 public class ConsumerKafkaConfig {
@@ -65,7 +68,7 @@ public class ConsumerKafkaConfig {
     }
 
 
-   /* @Bean
+    @Bean
     public ConsumerFactory<String, Person> personConsumerFactory() {
         var configs = new HashMap<String, Object>();
         configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
@@ -77,13 +80,27 @@ public class ConsumerKafkaConfig {
                 .forKeys();   // Buscar somente a da Consumidora (Person)
         return new DefaultKafkaConsumerFactory<>(configs, new StringDeserializer(), jsonDeserializer);
     }
+
     // Definindo o que a aplicação vai consumir
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, Person> personConcurrentKafkaListenerContainerFactory() {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, Person>();
         factory.setConsumerFactory(personConsumerFactory());
+        factory.setRecordInterceptor(adultInterceptor()); // se tiver mais de 18 anos vai passar a msg e vai para os listenings que tem esse ContainerFactory
         return factory;
-    }*/
+    }
+
+    // Exemplo minha consumidora vai consumir algum topico e quer filtrar por um estado das informações.
+
+    // Se eu gerar um person que idade >= 18 vai pro Listening que esta utilizando a minha personConcurrentKafkaListenerContainerFactory
+    // Se for < 18 vai printar so o record.
+    private RecordInterceptor<String, Person> adultInterceptor() {
+        return record -> {
+            log.info("Record: {}",record);
+            var person = record.value();
+            return person.getAge() >= 18 ? record : null;
+        };
+    }
 
 
 }
