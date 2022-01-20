@@ -38,6 +38,7 @@ public class ConsumerKafkaConfig {
     public ConcurrentKafkaListenerContainerFactory<String, String> concurrentKafkaListenerContainerFactory() {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setConcurrency(2); // Setando automaticamente a abertura de 2 Threads para cada KafkaListener
         return factory;
     }
 
