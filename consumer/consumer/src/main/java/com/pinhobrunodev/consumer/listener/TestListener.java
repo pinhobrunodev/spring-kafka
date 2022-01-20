@@ -1,6 +1,7 @@
 package com.pinhobrunodev.consumer.listener;
 
 import com.pinhobrunodev.consumer.custom.PersonCustomListener;
+import com.pinhobrunodev.consumer.model.City;
 import com.pinhobrunodev.consumer.model.Person;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -35,14 +36,18 @@ public class TestListener {
 
 
     @PersonCustomListener(groupId = "group-1")
-    public void create(Person person) {
-        log.info("Thread: {}", Thread.currentThread().getId()); // Cada listener abre uma Thread
-        log.info("Criar: {} ", person);
+    public void createPerson(Person person) {
+        log.info("Criar Pessoa: {}", person);
     }
 
-    @PersonCustomListener(groupId = "group-2")
+    @KafkaListener(topics = "city-topic",groupId = "group-2",containerFactory = "jsonKafkaListenerContainerFactory")
+    public void createCity(City city) {
+        log.info("Criar cidade: {}", city);
+    }
+
+    /*@PersonCustomListener(groupId = "group-2")
     public void history(Person person) {
         log.info("Thread: {}", Thread.currentThread().getId());
         log.info("Histórico: {} ", person);
-    }
+    }*/
 }

@@ -1,5 +1,6 @@
 package com.pinhobrunodev.producer.controller;
 
+import com.pinhobrunodev.producer.model.City;
 import com.pinhobrunodev.producer.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -23,7 +24,10 @@ public class TestController {
     public void sendPerson() {
         jsonKafkaTemplate.send("person-topic", new Person("Bruno", new Random().nextInt(50)));
     }
-
+    @GetMapping("send-city")
+    public void sendCity() {
+        jsonKafkaTemplate.send("city-topic", new City("Salvador", "BA"));
+    }
 
     @GetMapping("send")
     public void send() {
