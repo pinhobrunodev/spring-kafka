@@ -48,8 +48,8 @@ public class TestListener {
     }
 
     @KafkaListener(topics = "city-topic", groupId = "group-2", containerFactory = "jsonKafkaListenerContainerFactory")
-    public void createCity(City city) {
-        log.info("Criar cidade: {}", city);
+    public void createCity(List<City> cities) {
+        log.info("Cidades: {}", cities);
     }
 
     /*@PersonCustomListener(groupId = "group-2")
