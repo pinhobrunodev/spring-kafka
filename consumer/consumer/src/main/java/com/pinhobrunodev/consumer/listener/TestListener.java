@@ -10,13 +10,20 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Log4j2
 @Component
 public class TestListener {
 
+//    @KafkaListener(topics = "topic-1", groupId = "group-1", containerFactory = "concurrentKafkaListenerContainerFactory")
+//    public void listen(String message) {
+//        log.info("Thread: {} Message: {} ", Thread.currentThread().getId(), message); // Cada listener abre uma Thread
+//    }
+
     @KafkaListener(topics = "topic-1", groupId = "group-1", containerFactory = "concurrentKafkaListenerContainerFactory")
-    public void listen(String message) {
-        log.info("Thread: {} Message: {} ", Thread.currentThread().getId(), message); // Cada listener abre uma Thread
+    public void listen(List<String> messages) {
+        log.info("Thread: {} Messages: {} ", Thread.currentThread().getId(), messages); // Cada listener abre uma Thread
     }
 
     /*@KafkaListener(topics = "my-topic", groupId = "my-group", containerFactory = "concurrentKafkaListenerContainerFactory")

@@ -42,7 +42,10 @@ public class ConsumerKafkaConfig {
     public ConcurrentKafkaListenerContainerFactory<String, String> concurrentKafkaListenerContainerFactory() {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, String>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setConcurrency(2); // Setando automaticamente a abertura de 2 Threads para cada KafkaListener
+       // factory.setConcurrency(2);  Setando automaticamente a abertura de 2 Threads para cada KafkaListener
+        // Vai começar a consumir em Batch (Lista) -> Não precisando consumir 1 por 1, quando voltar a ficar online consome
+        // todos os records via Lista ( agrupadors ) em somente 1 Log
+        factory.setBatchListener(true);
         return factory;
     }
 
